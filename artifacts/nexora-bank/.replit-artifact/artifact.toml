@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "NEXORA BANK"
+description = "A premium digital banking prototype for hackathon and college demonstrations, with a responsive financial dashboard, mock transfers, analytics, card controls, loan tools, security center, and guided support experiences."
+version = "1.0.0"
+id = "artifacts/nexora-bank"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 22525
+
+[services.development]
+run = "pnpm --filter @workspace/nexora-bank run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/nexora-bank", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/nexora-bank/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "22525"
+BASE_PATH = "/"
